@@ -116,8 +116,8 @@ class ChatServer:
 
         return (
             ("JOINED_CHATROOM", room_title),
-            ("SERVER_IP", socket.gethostbyaddr(socket.gethostbyname(socket.gethostname()))[0]),
-            ("PORT", sys.argv[1]),
+            ("SERVER_IP", 0),
+            ("PORT", 0),
             ("ROOM_REF", self.rooms[room_title].room_id),
             ("JOIN_ID", id)
         )
