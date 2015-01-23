@@ -91,8 +91,9 @@ class LithiumHelper(object):
             return ""
         out = ""
         for key, value in OrderedDict(dict).iteritems():
-            out += "%s: %s\n" % (str(key), str(value))
+            out += "%s:%s\n" % (str(key), str(value))
         out += "\n"
+        print out
         return out
 
 class AtomicCount(object):
