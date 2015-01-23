@@ -1,10 +1,8 @@
-from collections import namedtuple, OrderedDict
-import hashlib
 import time
+import sys
 
 __author__ = 'kevin'
 from helpers import *
-from collections import defaultdict
 
 class Room:
     title = ""
@@ -58,7 +56,8 @@ class ChatServer:
         while (client in self.clients):
             try:
                 (head, msg_dict) = LithiumHelper.revc_msg_dict(client, 1)
-                client.send(self.message_parsing(head, msg_dict, client))
+                if not self.primitive_response(client, head):
+                    client.send(self.message_parsing(head, msg_dict, client))
             except Exception, e:
                 return LithiumHelper.to_message_dict(self.invalid_message())
 
@@ -144,3 +143,13 @@ class ChatServer:
             )
         else:
             return self.invalid_message()
+
+    def primitive_response(self, client, head):
+        if len(head) >= 5 and head[:4] == "HELO":
+            client.send("%sIP:%s\nPort:%s\nStudentID:11311101" % (head, socket.gethostbyaddr(socket.gethostbyname(socket.gethostname()))[0], sys.argv[1]))
+            return True
+        elif len(head) >= 5 and head[:12] == "KILL_SERVICE":
+            self.clients.remove(client)
+            client.close()
+            return True
+        return False
