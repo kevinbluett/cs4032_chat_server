@@ -53,7 +53,8 @@ class ChatServer:
         self.clients.append(client)
 
     def message_looper(self, client):
-        while (client in self.clients):
+        e_count = 0
+        while (client in self.clients) and :
             try:
                 (head, msg_dict) = LithiumHelper.revc_msg_dict(client, 1)
                 if not self.primitive_response(client, head):
@@ -114,13 +115,18 @@ class ChatServer:
 
         id = self.rooms[room_title].join(client, msg_dict["CLIENT_NAME"])
 
-        return (
+        client.send(LithiumHelper.to_message_dict((
             ("JOINED_CHATROOM", room_title),
             ("SERVER_IP", "0.0.0.0"),
             ("PORT", 0),
             ("ROOM_REF", self.rooms[room_title].room_id),
             ("JOIN_ID", id)
-        )
+        ))
+
+        self.rooms[room_title].send_message(msg_dict["CLIENT_NAME"], "%s has joined this chatroom." % (msg_dict["CLIENT_NAME"]))
+
+        return ()
+
 
     def leave_chatroom(self, client, hdr_dict, num):
         (_, msg_dict) = LithiumHelper.revc_msg_dict(client, num)
