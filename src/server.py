@@ -10,7 +10,7 @@ def lab2_handler(server, (sock, addr)):
     sock.setblocking(True)
     if not sock in chat.clients:
         chat.client_join(sock)
-        Thread(target=chat.message_looper, args=[sock]).start()
+    chat.message_looper(sock)
 
     # if data == "KILL_SERVICE\n":
     #     if server is not None:
