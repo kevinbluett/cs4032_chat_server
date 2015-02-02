@@ -58,7 +58,9 @@ class ChatServer:
             try:
                 (head, msg_dict) = LithiumHelper.revc_msg_dict(client, 1)
                 if not self.primitive_response(client, head):
-                    client.send(self.message_parsing(head, msg_dict, client))
+                    result = self.message_parsing(head, msg_dict, client)
+                    if result is not None:
+                        client.send(result)
             except Exception, e:
                 return LithiumHelper.to_message_dict(self.invalid_message())
 

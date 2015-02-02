@@ -88,7 +88,7 @@ class LithiumHelper(object):
     @staticmethod
     def to_message_dict(dict):
         if dict is None or len(dict) == 0:
-            return ""
+            return None
         out = ""
         for key, value in OrderedDict(dict).iteritems():
             out += "%s:%s\n" % (str(key), str(value))
