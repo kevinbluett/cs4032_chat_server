@@ -121,7 +121,7 @@ class ChatServer:
             ("PORT", 0),
             ("ROOM_REF", self.rooms[room_title].room_id),
             ("JOIN_ID", id)
-        ))
+        )))
 
         self.rooms[room_title].send_message(msg_dict["CLIENT_NAME"], "%s has joined this chatroom." % (msg_dict["CLIENT_NAME"]))
 
