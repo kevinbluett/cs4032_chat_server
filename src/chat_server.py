@@ -53,8 +53,8 @@ class ChatServer:
         self.clients.append(client)
 
     def message_looper(self, client):
-        e_count = 0
-        while (client in self.clients) and :
+        error_count = 0
+        while (client in self.clients) and error_count < 4:
             try:
                 (head, msg_dict) = LithiumHelper.revc_msg_dict(client, 1)
                 if not self.primitive_response(client, head):
@@ -62,6 +62,7 @@ class ChatServer:
                     if result is not None:
                         client.send(result)
             except Exception, e:
+                error_count += 1
                 return LithiumHelper.to_message_dict(self.invalid_message())
 
     def message_parsing(self, head, msg_dict, client):
@@ -74,13 +75,10 @@ class ChatServer:
 
         f = ops.get(head, None)
 
-        try:
-            if f:
-                return LithiumHelper.to_message_dict(f())
-            else:
-                return LithiumHelper.to_message_dict(self.invalid_message())
-        except Exception, e:
-            print "Generic error occured."
+        if f:
+            return LithiumHelper.to_message_dict(f())
+        else:
+            return LithiumHelper.to_message_dict(self.invalid_message())
 
     def invalid_message(self):
         return (
