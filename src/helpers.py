@@ -38,7 +38,9 @@ class LithiumHelper(object):
     def recv_line_num(sock, count):
         out = '';
         while count > 0:
-            out += LithiumHelper.recv_line(sock)
+            line = LithiumHelper.recv_line(sock)
+            print "recv: %s" % (line)
+            out += line
             count -= 1
         return out
 
