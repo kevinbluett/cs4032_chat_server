@@ -8,6 +8,7 @@ class LithiumHandler(asyncore.dispatcher):
         asyncore.dispatcher.__init__(self, sock=pair[0])
 
     def handle_read(self):
+        print "handle read"
         self.process(self)
 
     def process(self, dispatcher):
