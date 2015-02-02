@@ -92,7 +92,7 @@ class LithiumHelper(object):
         out = ""
         for key, value in OrderedDict(dict).iteritems():
             out += "%s:%s\n" % (str(key), str(value))
-        out += "\n"
+        out += ""
         print out
         return out
 
